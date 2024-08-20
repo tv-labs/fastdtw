@@ -139,8 +139,11 @@ def __dtw(x, y, window, dist):
     D[0, 0] = (0, 0, 0)
     for i, j in window:
         dt = dist(x[i-1], y[j-1])
-        D[i, j] = min((D[i-1, j][0]+dt, i-1, j), (D[i, j-1][0]+dt, i, j-1),
-                      (D[i-1, j-1][0]+dt, i-1, j-1), key=lambda a: a[0])
+        D[i, j] = min(
+            (D[i-1, j-1][0]+dt, i-1, j-1),
+            (D[i, j-1][0]+dt, i, j-1),
+            (D[i-1, j][0]+dt, i-1, j),
+        key=lambda a: a[0])
     path = []
     i, j = len_x, len_y
     while not (i == j == 0):
